@@ -60,7 +60,32 @@ var dessert;
                     return dessert; // making sure method returns namespace
                 };
             } else {
-                throw Error("Assertion type already taken.");
+                throw Error("Custom assertion name ('" + methodName + "') already taken.");
+            }
+
+            return dessert;
+        },
+
+        /**
+         * Adds new validator(s).
+         * In a validator function, `this` will refer to the `dessert` namespace.
+         * Expected to return boolean.
+         * IMPORTANT: `.addTypes()` is preferable to `.addType()`, for IDE integration reasons,
+         * even when adding a single type.
+         * @param methods {object}
+         */
+        addTypes: function (methods) {
+            dessert
+                .assert(methods instanceof Object);
+
+            var methodName,
+                validator;
+
+            for (methodName in methods) {
+                if (methods.hasOwnProperty(methodName)) {
+                    validator = methods[methodName];
+                    dessert.addType(methodName, validator);
+                }
             }
 
             return dessert;
