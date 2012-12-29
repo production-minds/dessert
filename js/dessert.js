@@ -42,6 +42,28 @@ var dessert;
             );
         },
 
+        isObject: function (expr) {
+            return this.assert(expr instanceof Object);
+        },
+
+        isObjectOptional: function (expr) {
+            return this.assert(
+                typeof expr === 'undefined' ||
+                expr instanceof Object
+            );
+        },
+
+        isArray: function (expr) {
+            return this.assert(expr instanceof Array);
+        },
+
+        isArrayOptional: function (expr) {
+            return this.assert(
+                typeof expr === 'undefined' ||
+                expr instanceof Array
+            );
+        },
+
         /**
          * Adds a new assertion method.
          * @param methodName {string} Name of new method
