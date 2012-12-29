@@ -47,6 +47,7 @@ var dessert;
          * @param methodName {string} Name of new method
          * @param validator {function} Function validating a given type.
          * In it, `this` will refer to the `dessert` namespace.
+         * Expected to return boolean.
          */
         addType: function (methodName, validator) {
             dessert
@@ -55,7 +56,7 @@ var dessert;
 
             if (!dessert.hasOwnProperty(methodName)) {
                 dessert[methodName] = function () {
-                    validator.apply(dessert, arguments);
+                    dessert.assert(validator.apply(dessert, arguments));
                     return dessert; // making sure method returns namespace
                 };
             } else {

@@ -56,8 +56,8 @@
         }, "Invalid validator passed (non-function)");
 
         dessert.addType('test', function (expr) {
-            // this will assert on expr not being equal to 'test'
-            this.assert(expr === 'test');
+            // returning a boolean expression to be passed to `.assert`
+            return expr === 'test';
         });
 
         ok(dessert.hasOwnProperty('test'), "New property added to namespace");
