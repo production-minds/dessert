@@ -1,0 +1,4 @@
+/.idea/
+/build*.sh
+/lib/
+/targets.sh
