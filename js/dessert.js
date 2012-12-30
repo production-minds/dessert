@@ -30,7 +30,8 @@ var dessert;
                 if (!dessert.hasOwnProperty(methodName)) {
                     dessert[methodName] = function () {
                         var success = validator.apply(dessert, arguments);
-                        if (arguments[1] === true) {
+                        // checking last argument for indication of soft mode
+                        if (Array.prototype.pop.call(arguments) === true) {
                             // soft mode: skipping actual assertion
                             return success;
                         } else {

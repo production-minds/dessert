@@ -73,8 +73,10 @@
     });
 
     test("Soft mode", function () {
-        equal(dessert.isString("hello", true), true, "Soft mode success");
-        equal(dessert.isString(null, true), false, "Soft mode failure (null instead of string)");
+        equal(dessert.isString("hello", true), true, "Success");
+        equal(dessert.isString("hello", "blah", true), true, "Success w/ longer argument list");
+        equal(dessert.isString(null, true), false, "Failure (null instead of string)");
+        equal(dessert.isString(null, "blah", true), false, "Failure (null instead of string, w/ longer arg list)");
     });
 
     test("Function assertion", function () {
