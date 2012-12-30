@@ -53,6 +53,13 @@ var dessert;
             );
         },
 
+        isPlainObject: function (expr) {
+            return this.assert(
+                expr instanceof Object &&
+                Object.getPrototypeOf(expr) === Object.prototype
+            );
+        },
+
         isArray: function (expr) {
             return this.assert(expr instanceof Array);
         },

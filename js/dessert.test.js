@@ -44,6 +44,18 @@
         }, "String (non-function) fails string assertion");
     });
 
+    test("Plain object assertion", function () {
+        equal(dessert.isPlainObject({}), dessert, "Plain object passes assertion");
+
+        raises(function () {
+            dessert.isPlainObject(Object.prototype);
+        }, "`Object.prototype` fails assertion");
+
+        raises(function () {
+            dessert.isPlainObject(Object.create({}));
+        }, "Derived object fails assertion");
+    });
+
     test("Type addition", function () {
         ok(!dessert.hasOwnProperty('test'), "New type is not pre-existing (sanity check)");
 
