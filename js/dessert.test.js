@@ -35,29 +35,23 @@
         raises(function () {
             dessert.test('foo');
         }, "Custom assertion failed");
-
-        // cleanup
-        delete dessert.test;
     });
 
     test("Multiple type addition", function () {
-        ok(!dessert.hasOwnProperty('test'), "New type is not pre-existing (sanity check)");
+        ok(!dessert.hasOwnProperty('test1'), "New type is not pre-existing (sanity check)");
 
         dessert.addTypes({
-            test: function (expr) {
+            test1: function (expr) {
                 // returning a boolean expression to be passed to `.assert`
                 return expr === 'test';
             }
         });
 
-        equal(dessert.test('test'), dessert, "Custom assertion passed");
+        equal(dessert.test1('test'), dessert, "Custom assertion passed");
 
         raises(function () {
-            dessert.test('foo');
+            dessert.test1('foo');
         }, "Custom assertion failed");
-
-        // cleanup
-        delete dessert.test;
     });
 
     test("String assertion", function () {

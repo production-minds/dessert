@@ -1,6 +1,9 @@
 var dessert;
 
 (function () {
+    // internal namespace for custom validators
+    var validators = {};
+
     dessert = {
         /**
          * Asserts an expression.
@@ -20,17 +23,21 @@ var dessert;
          * Adds a new validator.
          * @param methodName {string} Name of new method
          * @param validator {function} Function validating a given type.
-         * In it, `this` will refer to the `dessert` namespace.
-         * Expected to return boolean.
+         * In it, `this` will refer to the `validators` namespace containing
+         * all available validators. Expected to return boolean.
          */
         addType: function (methodName, validator) {
             if (typeof methodName === 'string' &&
                 typeof validator === 'function'
                 ) {
-                if (!dessert.hasOwnProperty(methodName)) {
+                if (!validators.hasOwnProperty(methodName)) {
+                    // adding validator to validator pool
+                    validators[methodName] = validator;
+
+                    // wrapping and adding validator to main namespace
                     dessert[methodName] = function () {
                         // executing validator
-                        var success = validator.apply(dessert, arguments),
+                        var success = validator.apply(validators, arguments),
                             lastArg = arguments.length > 1 &&
                                       Array.prototype.pop.call(arguments);
 
@@ -92,10 +99,8 @@ var dessert;
         },
 
         isStringOptional: function (expr) {
-            return (
-                typeof expr === 'undefined' ||
-                typeof expr === 'string'
-                );
+            return typeof expr === 'undefined' ||
+                   typeof expr === 'string';
         },
 
         isStringStrict: function (expr) {
@@ -107,10 +112,8 @@ var dessert;
         },
 
         isFunctionOptional: function (expr) {
-            return (
-                typeof expr === 'undefined' ||
-                typeof expr === 'function'
-                );
+            return typeof expr === 'undefined' ||
+                   typeof expr === 'function';
         },
 
         isObject: function (expr) {
@@ -118,17 +121,13 @@ var dessert;
         },
 
         isObjectOptional: function (expr) {
-            return (
-                typeof expr === 'undefined' ||
-                expr instanceof Object
-                );
+            return typeof expr === 'undefined' ||
+                   expr instanceof Object;
         },
 
         isPlainObject: function (expr) {
-            return (
-                expr instanceof Object &&
-                Object.getPrototypeOf(expr) === Object.prototype
-                );
+            return expr instanceof Object &&
+                   Object.getPrototypeOf(expr) === Object.prototype;
         },
 
         isArray: function (expr) {
@@ -136,10 +135,8 @@ var dessert;
         },
 
         isArrayOptional: function (expr) {
-            return (
-                typeof expr === 'undefined' ||
-                expr instanceof Array
-                );
+            return typeof expr === 'undefined' ||
+                   expr instanceof Array;
         }
     });
 }());
