@@ -29,18 +29,28 @@ var dessert;
                 ) {
                 if (!dessert.hasOwnProperty(methodName)) {
                     dessert[methodName] = function () {
-                        var success = validator.apply(dessert, arguments);
+                        // executing validator
+                        var success = validator.apply(dessert, arguments),
+                            lastArg = arguments.length > 1 &&
+                                      Array.prototype.pop.call(arguments);
+
                         // checking last argument for indication of soft mode
-                        if (Array.prototype.pop.call(arguments) === true) {
+                        if (lastArg === true) {
                             // soft mode: skipping actual assertion
                             return success;
                         } else {
-                            dessert.assert(success);
-                            return dessert; // making sure method returns namespace
+                            if (typeof lastArg === 'string') {
+                                dessert.assert(success, lastArg);
+                            } else {
+                                dessert.assert(success);
+                            }
+
+                            // making sure method returns namespace
+                            return dessert;
                         }
                     };
                 } else {
-                    throw Error("Custom assertion name ('" + methodName + "') already taken.");
+                    this.assert(false, "Custom assertion name ('" + methodName + "') already taken.");
                 }
             }
 
