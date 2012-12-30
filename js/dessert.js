@@ -30,8 +30,7 @@ var dessert;
             if (typeof methodName === 'string' &&
                 typeof validator === 'function'
                 ) {
-                if (!validators.hasOwnProperty(methodName) &&
-                    !dessert.hasOwnProperty(methodName)
+                if (!validators.hasOwnProperty(methodName) && !dessert.hasOwnProperty(methodName)
                     ) {
                     // adding validator to validator pool
                     validators[methodName] = validator;
@@ -105,8 +104,22 @@ var dessert;
                    typeof expr === 'string';
         },
 
-        isStringStrict: function (expr) {
-            return expr instanceof String;
+        isBoolean: function (expr) {
+            return typeof expr === 'boolean';
+        },
+
+        isBooleanOptional: function (expr) {
+            return typeof expr === 'undefined' ||
+                   typeof expr === 'boolean';
+        },
+
+        isNumber: function (expr) {
+            return typeof expr === 'number';
+        },
+
+        isNumberOptional: function (expr) {
+            return typeof expr === 'undefined' ||
+                   typeof expr === 'number';
         },
 
         isFunction: function (expr) {
