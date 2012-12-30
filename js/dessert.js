@@ -30,7 +30,9 @@ var dessert;
             if (typeof methodName === 'string' &&
                 typeof validator === 'function'
                 ) {
-                if (!validators.hasOwnProperty(methodName)) {
+                if (!validators.hasOwnProperty(methodName) &&
+                    !dessert.hasOwnProperty(methodName)
+                    ) {
                     // adding validator to validator pool
                     validators[methodName] = validator;
 

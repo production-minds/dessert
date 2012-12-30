@@ -11,6 +11,10 @@
     });
 
     test("Type addition", function () {
+        raises(function () {
+            dessert.addType('assert', function () {});
+        }, "Attempting to replace core function");
+
         ok(!dessert.hasOwnProperty('test'), "New type is not pre-existing (sanity check)");
 
         dessert.addType(1, function () {});
