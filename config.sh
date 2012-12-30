@@ -7,4 +7,5 @@ LIB="dessert"
 
 FILES="
 js/dessert.js
+js/exports.js
 "
