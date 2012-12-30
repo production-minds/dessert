@@ -152,6 +152,15 @@ var dessert;
         isArrayOptional: function (expr) {
             return typeof expr === 'undefined' ||
                    expr instanceof Array;
+        },
+
+        isRegExp: function (expr) {
+            return expr instanceof RegExp;
+        },
+
+        isRegExpOptional: function (expr) {
+            return typeof expr === 'undefined' ||
+                   expr instanceof RegExp;
         }
     });
 }());
