@@ -2,16 +2,16 @@
 (function () {
     module('defaults');
 
+    test("Value check", function () {
+        equal(dessert.hasValue(null, true), true, "Null passes value assert");
+        equal(dessert.hasValue(undefined, true), false, "Undefined fails value assert");
+        equal(dessert.hasValue("foo", true), true, "String passes value assert");
+    });
+
     test("String assertion", function () {
-        equal(dessert.isString("hello"), dessert, "String passes assertion");
-
-        raises(function () {
-            dessert.isString();
-        }, "Undefined fails string assertion");
-
-        raises(function () {
-            dessert.isString(1);
-        }, "Numeric (non-string) fails string assertion");
+        equal(dessert.isString("hello", true), true, "String passes assertion");
+        equal(dessert.isString(undefined, true), false, "Undefined fails string assertion");
+        equal(dessert.isString(1, true), false, "Numeric (non-string) fails string assertion");
     });
 
     test("Soft mode", function () {

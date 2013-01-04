@@ -1,8 +1,12 @@
 /**
  * Basic Dessert Validators
  */
-/*global dessert */
+/*global dessert, jQuery */
 dessert.addTypes({
+    hasValue: function (expr) {
+        return typeof expr !== 'undefined';
+    },
+
     isString: function (expr) {
         return typeof expr === 'string';
     },
@@ -69,5 +73,28 @@ dessert.addTypes({
     isRegExpOptional: function (expr) {
         return typeof expr === 'undefined' ||
                expr instanceof RegExp;
+    },
+
+    isDate: function (expr) {
+        return expr instanceof Date;
+    },
+
+    isDateOptional: function (expr) {
+        return typeof expr === 'undefined' ||
+               expr instanceof Date;
+    },
+
+    /**
+     * Agnostic as to whether jQuery is present.
+     */
+    isJQuery: function (expr) {
+        return jQuery instanceof Object &&
+               expr instanceof jQuery;
+    },
+
+    isJQueryOptional: function (expr) {
+        return typeof expr === 'undefined' ||
+               jQuery instanceof Object &&
+               expr instanceof jQuery;
     }
 });
