@@ -1,10 +1,12 @@
 var dessert;
 
 (function () {
-    // internal namespace for custom validators
-    var validators = {};
-
     dessert = {
+        /**
+         * Namespace for custom validators
+         */
+        validators: {},
+
         /**
          * Asserts an expression.
          * @param expr {boolean} Boolean expression to evaluate.
@@ -27,6 +29,8 @@ var dessert;
          * all available validators. Expected to return boolean.
          */
         addType: function (methodName, validator) {
+            var validators = this.validators;
+
             if (typeof methodName === 'string' &&
                 typeof validator === 'function'
                 ) {
@@ -39,23 +43,17 @@ var dessert;
                     dessert[methodName] = function () {
                         // executing validator
                         var success = validator.apply(validators, arguments),
-                            lastArg = arguments.length > 1 &&
-                                      Array.prototype.pop.call(arguments);
+                            message = Array.prototype.pop.apply(arguments);
 
-                        // checking last argument for indication of soft mode
-                        if (lastArg === true) {
-                            // soft mode: skipping actual assertion
-                            return success;
-                        } else {
-                            if (typeof lastArg === 'string') {
-                                dessert.assert(success, lastArg);
-                            } else {
-                                dessert.assert(success);
-                            }
+                        dessert.assert(
+                            success,
+                            typeof message === 'string' ?
+                                message :
+                                undefined
+                        );
 
-                            // making sure method returns namespace
-                            return dessert;
-                        }
+                        // making sure method returns namespace
+                        return dessert;
                     };
                 } else {
                     this.assert(false, "Custom assertion name ('" + methodName + "') already taken.");

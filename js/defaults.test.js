@@ -2,56 +2,38 @@
 (function () {
     module('defaults');
 
+    var v = dessert.validators;
+
     test("Value check", function () {
-        equal(dessert.hasValue(null, true), true, "Null passes value assert");
-        equal(dessert.hasValue(undefined, true), false, "Undefined fails value assert");
-        equal(dessert.hasValue("foo", true), true, "String passes value assert");
+        equal(v.hasValue(null), true, "Null passes value assert");
+        equal(v.hasValue(undefined), false, "Undefined fails value assert");
+        equal(v.hasValue("foo"), true, "String passes value assert");
     });
 
     test("String assertion", function () {
-        equal(dessert.isString("hello", true), true, "String passes assertion");
-        equal(dessert.isString(undefined, true), false, "Undefined fails string assertion");
-        equal(dessert.isString(1, true), false, "Numeric (non-string) fails string assertion");
-    });
-
-    test("Soft mode", function () {
-        equal(dessert.isString("hello", true), true, "Success");
-        equal(dessert.isString("hello", "blah", true), true, "Success w/ longer argument list");
-        equal(dessert.isString(null, true), false, "Failure (null instead of string)");
-        equal(dessert.isString(null, "blah", true), false, "Failure (null instead of string, w/ longer arg list)");
+        equal(v.isString("hello"), true, "String passes assertion");
+        equal(v.isString(undefined), false, "Undefined fails string assertion");
+        equal(v.isString(1), false, "Numeric (non-string) fails string assertion");
+        equal(v.isString("hello", "blah"), true, "Success w/ longer argument list");
+        equal(v.isString(null), false, "Failure (null instead of string)");
+        equal(v.isString(null, "blah"), false, "Failure (null instead of string, w/ longer arg list)");
     });
 
     test("Function assertion", function () {
-        equal(dessert.isFunction(function () {}), dessert, "Function passes assertion");
-
-        raises(function () {
-            dessert.isFunction();
-        }, "Undefined fails string assertion");
-
-        raises(function () {
-            dessert.isFunction("hello");
-        }, "String (non-function) fails string assertion");
+        equal(v.isFunction(function () {}), true, "Function passes assertion");
+        equal(v.isFunction(), false, "Undefined fails string assertion");
+        equal(v.isFunction("hello"), false, "String (non-function) fails string assertion");
     });
 
     test("Optional function assertion", function () {
-        equal(dessert.isFunctionOptional(function () {}), dessert, "Function passes assertion");
-
-        equal(dessert.isFunctionOptional(), dessert, "Undefined passes assertion");
-
-        raises(function () {
-            dessert.isFunctionOptional('foo');
-        }, "String (non-function) fails string assertion");
+        equal(v.isFunctionOptional(function () {}), true, "Function passes assertion");
+        equal(v.isFunctionOptional(), true, "Undefined passes assertion");
+        equal(v.isFunctionOptional('foo'), false, "String (non-function) fails string assertion");
     });
 
     test("Plain object assertion", function () {
-        equal(dessert.isPlainObject({}), dessert, "Plain object passes assertion");
-
-        raises(function () {
-            dessert.isPlainObject(Object.prototype);
-        }, "`Object.prototype` fails assertion");
-
-        raises(function () {
-            dessert.isPlainObject(Object.create({}));
-        }, "Derived object fails assertion");
+        equal(v.isPlainObject({}), true, "Plain object passes assertion");
+        equal(v.isPlainObject(Object.prototype), false, "`Object.prototype` fails assertion");
+        equal(v.isPlainObject(Object.create({})), false, "Derived object fails assertion");
     });
 }());
