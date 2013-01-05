@@ -1,4 +1,4 @@
-/*global dessert, module, test, raises, equal, ok */
+/*global dessert, module, test, expect, raises, equal, ok */
 (function () {
     module('dessert');
 
@@ -8,6 +8,28 @@
         raises(function () {
             dessert.assert(false);
         }, "Failed assertion raises exception");
+    });
+
+    test("Custom handler", function () {
+        expect(4);
+
+        dessert.customHandler(function (message) {
+            ok(true, "Custom handler called");
+            equal(message, "foo", "Message passed to custom handler");
+        });
+
+        raises(function () {
+            dessert.assert(false, "foo");
+        }, "Assertion with custom handler");
+
+        dessert.customHandler(function (message) {
+            ok(true, "Custom handler prevents exception");
+            return false;
+        });
+
+        dessert.assert(false, "foo");
+
+        dessert.customHandler(undefined);
     });
 
     test("Type addition", function () {

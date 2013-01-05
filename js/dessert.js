@@ -1,6 +1,11 @@
 var dessert;
 
 (function () {
+    /**
+     * @type function
+     */
+    var customHandler;
+
     dessert = {
         /**
          * Namespace for custom validators
@@ -14,11 +19,26 @@ var dessert;
          * @return {dessert}
          */
         assert: function (expr, message) {
+            var throwException = true;
             if (!expr) {
-                throw new Error(message || "Dessertion failed.");
+                if (typeof customHandler === 'function') {
+                    throwException = customHandler.call(this, message);
+                }
+                if (throwException !== false) {
+                    throw new Error(message || "Dessertion failed.");
+                }
             } else {
                 return dessert;
             }
+        },
+
+        /**
+         * Setter for global handler.
+         * @param value {function|undefined}
+         */
+        customHandler: function (value) {
+            customHandler = value;
+            return this;
         },
 
         /**
