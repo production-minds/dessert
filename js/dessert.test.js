@@ -39,22 +39,28 @@
 
         ok(!dessert.hasOwnProperty('test'), "New type is not pre-existing (sanity check)");
 
-        dessert.addType(1, function () {});
-        ok(!dessert.hasOwnProperty(1), "Invalid method name passed (namespace was not changed)");
+        raises(function () {
+            dessert.addType(1, function () {});
+        }, "Invalid method name argument raises exception");
 
-        dessert.addType('test', 'foo');
-        ok(!dessert.hasOwnProperty('test'), "Invalid validator passed (non-function, namespace was not changed)");
+        raises(function () {
+            dessert.addType('test', 'foo');
+        }, "Invalid validator argument raises exception");
 
-        dessert.addType('test', function (expr) {
+        function validator(expr) {
             // returning a boolean expression to be passed to `.assert`
             return expr === 'test';
-        });
+        }
+
+        dessert.addType('test', validator);
 
         ok(dessert.hasOwnProperty('test'), "New property added to namespace");
 
         raises(function () {
             dessert.addType('test', function () {});
         }, "Attempting to overwrite custom validator");
+
+        equal(dessert.addType('test', validator), dessert, "Adding the same validator again (silently)");
 
         equal(dessert.test('test'), dessert, "Custom assertion passed");
 

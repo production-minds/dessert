@@ -28,7 +28,7 @@ var dessert;
                     throw new Error(message || "Dessertion failed.");
                 }
             } else {
-                return dessert;
+                return this;
             }
         },
 
@@ -49,38 +49,39 @@ var dessert;
          * all available validators. Expected to return boolean.
          */
         addType: function (methodName, validator) {
-            var validators = this.validators;
-
-            if (typeof methodName === 'string' &&
+            this.assert(
+                typeof methodName === 'string' &&
                 typeof validator === 'function'
-                ) {
-                if (!validators.hasOwnProperty(methodName) && !dessert.hasOwnProperty(methodName)
-                    ) {
-                    // adding validator to validator pool
-                    validators[methodName] = validator;
+            );
 
-                    // wrapping and adding validator to main namespace
-                    dessert[methodName] = function () {
-                        // executing validator
-                        var success = validator.apply(validators, arguments),
-                            message = Array.prototype.pop.apply(arguments);
+            var that = this,
+                validators = this.validators;
 
-                        dessert.assert(
-                            success,
-                            typeof message === 'string' ?
-                                message :
-                                undefined
-                        );
+            if (!this.hasOwnProperty(methodName)) {
+                // adding validator to validator pool
+                validators[methodName] = validator;
 
-                        // making sure method returns namespace
-                        return dessert;
-                    };
-                } else {
-                    this.assert(false, "Custom assertion name ('" + methodName + "') already taken.");
-                }
+                // wrapping and adding validator to main namespace
+                this[methodName] = function () {
+                    // executing validator
+                    var success = validator.apply(validators, arguments),
+                        message = Array.prototype.pop.apply(arguments);
+
+                    that.assert(
+                        success,
+                        typeof message === 'string' ?
+                            message :
+                            undefined
+                    );
+
+                    // making sure method returns namespace
+                    return that;
+                };
+            } else if (validators[methodName] !== validator) {
+                this.assert(false, "Custom assertion name ('" + methodName + "') already taken.");
             }
 
-            return dessert;
+            return this;
         },
 
         /**
@@ -92,8 +93,7 @@ var dessert;
          * @param methods {object}
          */
         addTypes: function (methods) {
-            dessert
-                .assert(methods instanceof Object);
+            this.assert(methods instanceof Object);
 
             var methodName,
                 validator;
@@ -101,11 +101,11 @@ var dessert;
             for (methodName in methods) {
                 if (methods.hasOwnProperty(methodName)) {
                     validator = methods[methodName];
-                    dessert.addType(methodName, validator);
+                    this.addType(methodName, validator);
                 }
             }
 
-            return dessert;
+            return this;
         }
     };
 }());
