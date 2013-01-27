@@ -6,7 +6,8 @@ var dessert;
      */
     var customHandler;
 
-    dessert = {
+    /** @namespace */
+    dessert = this.dessert = {
         /**
          * Namespace for custom validators
          */
