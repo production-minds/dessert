@@ -2,4 +2,4 @@
 /build*.sh
 /lib/
 /targets.sh
-/build/
+/out/
