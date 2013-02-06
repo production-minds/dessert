@@ -1,5 +1,5 @@
 /**
- * Basic Dessert Validators
+ * Common Dessert Validators
  */
 /*global dessert, jQuery */
 dessert.addTypes({

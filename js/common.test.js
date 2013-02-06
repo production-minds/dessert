@@ -1,6 +1,6 @@
 /*global dessert, module, test, raises, equal, ok */
 (function () {
-    module('defaults');
+    module('common asserts');
 
     var v = dessert.validators;
 
