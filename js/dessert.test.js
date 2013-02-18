@@ -1,4 +1,4 @@
-/*global dessert, module, test, expect, raises, equal, ok */
+/*global dessert, module, test, expect, raises, equal, deepEqual, ok */
 (function () {
     module('dessert');
 
@@ -71,6 +71,34 @@
         raises(function () {
             dessert.test('foo');
         }, "Custom assertion failed");
+    });
+
+    test("Assertion messages", function () {
+        expect(2);
+
+        dessert.addType('testTypeWithMessage', function (expr) {
+            return expr === 'test' ?
+                true :
+                "String 'test' was expected, but got " + expr + ".";
+        });
+
+        var backup = dessert.assert;
+        dessert.assert = function (expr, message) {
+            equal(expr, false, "Assertion failed");
+            deepEqual(
+                Array.prototype.slice.call(arguments, 1),
+                [
+                    "Assertion failed",
+                    1,
+                    "String 'test' was expected, but got foo."
+                ],
+                "Composite multi-part assertion message"
+            );
+        };
+
+        dessert.testTypeWithMessage('foo', "Assertion failed", 1);
+
+        dessert.assert = backup;
     });
 
     test("Multiple type addition", function () {

@@ -72,15 +72,14 @@ var dessert;
                 // wrapping and adding validator to main namespace
                 this[methodName] = function () {
                     // executing validator
-                    var success = validator.apply(validators, arguments),
-                        message = Array.prototype.pop.apply(arguments);
+                    var message = validator.apply(validators, arguments),
+                        success = typeof message === 'string' ? false : !!message,
+                        args = [success]
+                            .concat(Array.prototype.slice.call(arguments, 1))
+                            .concat(message ? message : []);
 
-                    that.assert(
-                        success,
-                        typeof message === 'string' ?
-                            message :
-                            undefined
-                    );
+                    // calling assert with prepared arguments
+                    that.assert.apply(that, args);
 
                     // making sure method returns namespace
                     return that;
