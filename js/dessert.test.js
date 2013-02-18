@@ -11,13 +11,12 @@
     });
 
     test("Custom handler", function () {
-        expect(4);
+        expect(5);
 
         dessert.customHandler(function (message) {
             ok(true, "Custom handler called");
             equal(message, "foo", "Message passed to custom handler");
         });
-
         raises(function () {
             dessert.assert(false, "foo");
         }, "Assertion with custom handler");
@@ -26,8 +25,13 @@
             ok(true, "Custom handler prevents exception");
             return false;
         });
-
         dessert.assert(false, "foo");
+
+        dessert.customHandler(function (message) {
+            equal(message, "foo bar", "Multi-part message");
+            return false;
+        });
+        dessert.assert(false, "foo", "bar");
 
         dessert.customHandler(undefined);
     });

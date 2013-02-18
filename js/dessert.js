@@ -22,9 +22,16 @@ var dessert;
         assert: function (expr, message) {
             var throwException = true;
             if (!expr) {
+                if (arguments.length > 2) {
+                    // joining message parts together
+                    message = Array.prototype.slice.call(arguments, 1).join(' ');
+                }
+
                 if (typeof customHandler === 'function') {
+                    // passing control to custom handler
                     throwException = customHandler.call(this, message);
                 }
+
                 if (throwException !== false) {
                     throw new Error(message || "Dessertion failed.");
                 }
