@@ -77,9 +77,7 @@
         expect(2);
 
         dessert.addType('testTypeWithMessage', function (expr) {
-            return expr === 'test' ?
-                true :
-                "String 'test' was expected, but got " + expr + ".";
+            return expr === 'test';
         });
 
         var backup = dessert.assert;
@@ -89,8 +87,7 @@
                 Array.prototype.slice.call(arguments, 1),
                 [
                     "Assertion failed",
-                    1,
-                    "String 'test' was expected, but got foo."
+                    1
                 ],
                 "Composite multi-part assertion message"
             );

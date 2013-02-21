@@ -72,11 +72,9 @@ var dessert;
                 // wrapping and adding validator to main namespace
                 this[methodName] = function () {
                     // executing validator
-                    var message = validator.apply(validators, arguments),
-                        success = typeof message === 'string' ? false : !!message,
+                    var success = validator.apply(validators, arguments),
                         args = [success]
-                            .concat(Array.prototype.slice.call(arguments, 1))
-                            .concat(message ? message : []);
+                            .concat(Array.prototype.slice.call(arguments, 1));
 
                     // calling assert with prepared arguments
                     that.assert.apply(that, args);
