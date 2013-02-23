@@ -86,6 +86,7 @@
             deepEqual(
                 Array.prototype.slice.call(arguments, 1),
                 [
+                    'foo',
                     "Assertion failed",
                     1
                 ],

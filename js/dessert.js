@@ -73,8 +73,11 @@ var dessert;
                 this[methodName] = function () {
                     // executing validator
                     var success = validator.apply(validators, arguments),
-                        args = [success]
-                            .concat(Array.prototype.slice.call(arguments, 1));
+                        args = Array.prototype.slice.call(arguments);
+
+                    // assertion args will contain success as well as
+                    // original arguments to be included in message
+                    args.unshift(success);
 
                     // calling assert with prepared arguments
                     that.assert.apply(that, args);
