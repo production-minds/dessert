@@ -42,7 +42,7 @@ var dessert;
 
         /**
          * Setter for global handler.
-         * @param value {function|undefined}
+         * @param {function|undefined} value
          */
         customHandler: function (value) {
             customHandler = value;
