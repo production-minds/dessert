@@ -15,8 +15,8 @@ var dessert;
 
         /**
          * Asserts an expression.
-         * @param expr {boolean} Boolean expression to evaluate.
-         * @param [message] {string} Optional message
+         * @param {boolean} expr Boolean expression to evaluate.
+         * @param {string} [message] Optional message
          * @return {dessert}
          */
         assert: function (expr, message) {
@@ -51,8 +51,8 @@ var dessert;
 
         /**
          * Adds a new validator.
-         * @param methodName {string} Name of new method
-         * @param validator {function} Function validating a given type.
+         * @param {string} methodName Name of new method
+         * @param {function} validator Function validating a given type.
          * In it, `this` will refer to the `validators` namespace containing
          * all available validators. Expected to return boolean.
          */
@@ -98,7 +98,7 @@ var dessert;
          * Expected to return boolean.
          * IMPORTANT: `.addTypes()` is preferable to `.addType()`, for IDE integration reasons,
          * even when adding a single type.
-         * @param methods {object}
+         * @param {object} methods
          */
         addTypes: function (methods) {
             this.assert(methods instanceof Object);
