@@ -2,7 +2,7 @@
  * Common Dessert Validators
  */
 /*global dessert, jQuery */
-dessert.addTypes({
+dessert.addTypes(/** @lends dessert */{
     hasValue: function (expr) {
         return typeof expr !== 'undefined';
     },

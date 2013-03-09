@@ -6,7 +6,9 @@ var dessert;
      */
     var customHandler;
 
-    /** @namespace */
+    /**
+     * @class dessert
+     */
     dessert = {
         /**
          * Namespace for custom validators
