@@ -6,11 +6,13 @@ Dessert
 Simple assertion
 ----------------
 
-For asserting a boolean expression with an optional message.
+For asserting a boolean expression with an optional message or messages.
 
 `dessert.assert(expr, message)`
 
-On failure, ie. when expr is falsey, assert throws an exception with the specified (or default) message. On success, assert returns the namespace `dessert`, thus making asserts chainable.
+On failure, ie. when expr is falsey, assert throws an exception with the specified message. On success, assert returns the namespace `dessert`, thus making asserts chainable.
+
+Note that while only the first argument is used for detecting failure, any number of arguments may be passed to `.assert()` and all of those arguments will end up in the assertion message, in their original order.
 
 Default assertions
 ------------------
@@ -41,13 +43,13 @@ Dessert comes with a set of default assertion methods, each testing for a specif
 Assertions, default or user-defined (default assertions are added the same way user-defined ones are), may be invoked as follows:
 
 ```javascript
-dessert.isString(myString);
+dessert.isString(myString, myMessage);
 ```
 
 User-defined assertions
 -----------------------
 
-In order to extend Dessert with your own assertions, you'll need to add validators using Dessert's API created for this specific reason. Validators are functions that take any number of arguments, and return false if the arguments satisfy the condition, and false if not.
+In order to extend Dessert with your own assertions, you'll need to add validators using Dessert's API created for this specific purpose. Validators are functions that take any number of arguments, and return `true` if the arguments satisfy the condition, and `false` if they don't.
 
 There are two ways of adding validators. The shorter one takes a method name and a validator function:
 
@@ -62,7 +64,7 @@ dessert.addTypes({
 });
 ```
 
-When a user-defined assertion is invoked as `dessert.methodName()`, the validator is evaluated and its result passed to `dessert.assert()`.
+When a user-defined assertion is invoked as `dessert.methodName()`, the validator is first evaluated, then its result and all arguments are passed to `dessert.assert()`.
 
 Validator composition
 ---------------------
