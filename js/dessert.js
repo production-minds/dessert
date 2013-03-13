@@ -12,6 +12,7 @@ var dessert;
     dessert = {
         /**
          * Namespace for custom validators
+         * @dict
          */
         validators: {},
 
@@ -45,6 +46,7 @@ var dessert;
         /**
          * Setter for global handler.
          * @param {function|undefined} value
+         * @return {dessert}
          */
         customHandler: function (value) {
             customHandler = value;
@@ -57,6 +59,7 @@ var dessert;
          * @param {function} validator Function validating a given type.
          * In it, `this` will refer to the `validators` namespace containing
          * all available validators. Expected to return boolean.
+         * @return {dessert}
          */
         addType: function (methodName, validator) {
             this.assert(
@@ -71,7 +74,11 @@ var dessert;
                 // adding validator to validator pool
                 validators[methodName] = validator;
 
-                // wrapping and adding validator to main namespace
+                /**
+                 * Wrapping and adding validator to main namespace
+                 * Executes validator and calls assert with the result.
+                 * @returns {dessert}
+                 */
                 this[methodName] = function () {
                     // executing validator
                     var success = validator.apply(validators, arguments),
@@ -101,6 +108,7 @@ var dessert;
          * IMPORTANT: `.addTypes()` is preferable to `.addType()`, for IDE integration reasons,
          * even when adding a single type.
          * @param {object} methods
+         * @return {dessert}
          */
         addTypes: function (methods) {
             this.assert(methods instanceof Object);
