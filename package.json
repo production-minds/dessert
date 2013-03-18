@@ -1,0 +1,14 @@
+{
+    "name"       : "dessert",
+    "version"    : "0.2.5",
+    "description": "Extensible assertions",
+    "keywords"   : ["assert", "assertions", "error", "exception"],
+    "author"     : "Dan Stocker <dan@kwaia.com>",
+    "license"    : "MIT",
+    "repository" : {
+        "type": "git",
+        "url" : "https://github.com/production-minds/dessert.git"
+    },
+    "files"      : ["out/dessert.js"],
+    "main"       : "out/dessert.js"
+}
