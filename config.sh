@@ -10,3 +10,5 @@ js/dessert.js
 js/common.js
 js/exports.js
 "
+
+LICENSE="js/license.js"
