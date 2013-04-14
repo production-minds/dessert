@@ -8,30 +8,36 @@ dessert.addTypes(/** @lends dessert */{
     },
 
     isString: function (expr) {
-        return typeof expr === 'string';
+        return typeof expr === 'string' ||
+               expr instanceof String;
     },
 
     isStringOptional: function (expr) {
         return typeof expr === 'undefined' ||
-               typeof expr === 'string';
+               typeof expr === 'string' ||
+               expr instanceof String;
     },
 
     isBoolean: function (expr) {
-        return typeof expr === 'boolean';
+        return typeof expr === 'boolean' ||
+               expr instanceof Boolean;
     },
 
     isBooleanOptional: function (expr) {
         return typeof expr === 'undefined' ||
-               typeof expr === 'boolean';
+               typeof expr === 'boolean' ||
+               expr instanceof Boolean;
     },
 
     isNumber: function (expr) {
-        return typeof expr === 'number';
+        return typeof expr === 'number' ||
+               expr instanceof  Number;
     },
 
     isNumberOptional: function (expr) {
         return typeof expr === 'undefined' ||
-               typeof expr === 'number';
+               typeof expr === 'number' ||
+               expr instanceof  Number;
     },
 
     isFunction: function (expr) {
