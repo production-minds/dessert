@@ -1,6 +1,8 @@
 var dessert;
 
 (function () {
+    "use strict";
+
     /**
      * @type function
      */

@@ -2,105 +2,109 @@
  * Common Dessert Validators
  */
 /*global dessert, jQuery */
-dessert.addTypes(/** @lends dessert */{
-    hasValue: function (expr) {
-        return typeof expr !== 'undefined';
-    },
+(function () {
+    "use strict";
 
-    isString: function (expr) {
-        return typeof expr === 'string' ||
-               expr instanceof String;
-    },
+    dessert.addTypes(/** @lends dessert */{
+        hasValue: function (expr) {
+            return typeof expr !== 'undefined';
+        },
 
-    isStringOptional: function (expr) {
-        return typeof expr === 'undefined' ||
-               typeof expr === 'string' ||
-               expr instanceof String;
-    },
+        isString: function (expr) {
+            return typeof expr === 'string' ||
+                   expr instanceof String;
+        },
 
-    isBoolean: function (expr) {
-        return typeof expr === 'boolean' ||
-               expr instanceof Boolean;
-    },
+        isStringOptional: function (expr) {
+            return typeof expr === 'undefined' ||
+                   typeof expr === 'string' ||
+                   expr instanceof String;
+        },
 
-    isBooleanOptional: function (expr) {
-        return typeof expr === 'undefined' ||
-               typeof expr === 'boolean' ||
-               expr instanceof Boolean;
-    },
+        isBoolean: function (expr) {
+            return typeof expr === 'boolean' ||
+                   expr instanceof Boolean;
+        },
 
-    isNumber: function (expr) {
-        return typeof expr === 'number' ||
-               expr instanceof  Number;
-    },
+        isBooleanOptional: function (expr) {
+            return typeof expr === 'undefined' ||
+                   typeof expr === 'boolean' ||
+                   expr instanceof Boolean;
+        },
 
-    isNumberOptional: function (expr) {
-        return typeof expr === 'undefined' ||
-               typeof expr === 'number' ||
-               expr instanceof  Number;
-    },
+        isNumber: function (expr) {
+            return typeof expr === 'number' ||
+                   expr instanceof  Number;
+        },
 
-    isFunction: function (expr) {
-        return typeof expr === 'function';
-    },
+        isNumberOptional: function (expr) {
+            return typeof expr === 'undefined' ||
+                   typeof expr === 'number' ||
+                   expr instanceof  Number;
+        },
 
-    isFunctionOptional: function (expr) {
-        return typeof expr === 'undefined' ||
-               typeof expr === 'function';
-    },
+        isFunction: function (expr) {
+            return typeof expr === 'function';
+        },
 
-    isObject: function (expr) {
-        return expr instanceof Object;
-    },
+        isFunctionOptional: function (expr) {
+            return typeof expr === 'undefined' ||
+                   typeof expr === 'function';
+        },
 
-    isObjectOptional: function (expr) {
-        return typeof expr === 'undefined' ||
-               expr instanceof Object;
-    },
+        isObject: function (expr) {
+            return expr instanceof Object;
+        },
 
-    isPlainObject: function (expr) {
-        return expr instanceof Object &&
-               Object.getPrototypeOf(expr) === Object.prototype;
-    },
+        isObjectOptional: function (expr) {
+            return typeof expr === 'undefined' ||
+                   expr instanceof Object;
+        },
 
-    isArray: function (expr) {
-        return expr instanceof Array;
-    },
+        isPlainObject: function (expr) {
+            return expr instanceof Object &&
+                   Object.getPrototypeOf(expr) === Object.prototype;
+        },
 
-    isArrayOptional: function (expr) {
-        return typeof expr === 'undefined' ||
-               expr instanceof Array;
-    },
+        isArray: function (expr) {
+            return expr instanceof Array;
+        },
 
-    isRegExp: function (expr) {
-        return expr instanceof RegExp;
-    },
+        isArrayOptional: function (expr) {
+            return typeof expr === 'undefined' ||
+                   expr instanceof Array;
+        },
 
-    isRegExpOptional: function (expr) {
-        return typeof expr === 'undefined' ||
-               expr instanceof RegExp;
-    },
+        isRegExp: function (expr) {
+            return expr instanceof RegExp;
+        },
 
-    isDate: function (expr) {
-        return expr instanceof Date;
-    },
+        isRegExpOptional: function (expr) {
+            return typeof expr === 'undefined' ||
+                   expr instanceof RegExp;
+        },
 
-    isDateOptional: function (expr) {
-        return typeof expr === 'undefined' ||
-               expr instanceof Date;
-    },
+        isDate: function (expr) {
+            return expr instanceof Date;
+        },
 
-    /**
-     * Agnostic as to whether jQuery is present.
-     */
-    isJQuery: function (expr) {
-        return jQuery instanceof Object &&
-               expr instanceof jQuery;
-    },
+        isDateOptional: function (expr) {
+            return typeof expr === 'undefined' ||
+                   expr instanceof Date;
+        },
 
-    isJQueryOptional: function (expr) {
-        return typeof expr === 'undefined' ||
-               jQuery instanceof Object &&
-               expr instanceof jQuery;
-    }
-});
+        /**
+         * Agnostic as to whether jQuery is present.
+         */
+        isJQuery: function (expr) {
+            return jQuery instanceof Object &&
+                   expr instanceof jQuery;
+        },
+
+        isJQueryOptional: function (expr) {
+            return typeof expr === 'undefined' ||
+                   jQuery instanceof Object &&
+                   expr instanceof jQuery;
+        }
+    });
+}());

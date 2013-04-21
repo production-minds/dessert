@@ -1,5 +1,7 @@
 /*global dessert, module, test, expect, raises, equal, deepEqual, ok */
 (function () {
+    "use strict";
+
     module('dessert');
 
     test("General assertion", function () {
