@@ -20,29 +20,37 @@ var dessert;
 
         /**
          * Asserts an expression.
-         * @param {boolean} expr Boolean expression to evaluate.
-         * @param {string} [message] Optional message
+         * @param {boolean|function} expr Boolean expression or validator function.
          * @return {dessert}
          */
-        assert: function (expr, message) {
-            var throwException = true;
-            if (!expr) {
-                if (arguments.length > 2) {
-                    // joining message parts together
-                    message = Array.prototype.slice.call(arguments, 1).join(' ');
-                }
+        assert: function (expr) {
+            var args,
+                throwException,
+                message;
 
+            if (typeof expr === 'function') {
+                // expression is a validator
+                args = Array.prototype.slice.call(arguments, 1);
+                expr = expr.apply(this.validators, args);
+            }
+
+            if (!expr) {
                 if (typeof customHandler === 'function') {
                     // passing control to custom handler
-                    throwException = customHandler.call(this, message);
+                    throwException = customHandler.apply(this, arguments);
                 }
 
                 if (throwException !== false) {
-                    throw new Error(message || "Dessertion failed.");
+                    // args may already be calculated
+                    args = args || Array.prototype.slice.call(arguments, 1);
+
+                    // joining message parts together
+                    message = args.join(' ');
+                    throw new Error("Dessertion failed: " + message);
                 }
-            } else {
-                return this;
             }
+
+            return this;
         },
 
         /**
@@ -78,17 +86,11 @@ var dessert;
 
                 /**
                  * Wrapping and adding validator to main namespace
-                 * Executes validator and calls assert with the result.
                  * @returns {dessert}
                  */
                 this[methodName] = function () {
-                    // executing validator
-                    var success = validator.apply(validators, arguments),
-                        args = Array.prototype.slice.call(arguments);
-
-                    // assertion args will contain success as well as
-                    // original arguments to be included in message
-                    args.unshift(success);
+                    var args = Array.prototype.slice.call(arguments);
+                    args.unshift(validator);
 
                     // calling assert with prepared arguments
                     that.assert.apply(that, args);

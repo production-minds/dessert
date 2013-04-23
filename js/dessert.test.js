@@ -13,9 +13,9 @@
     });
 
     test("Custom handler", function () {
-        expect(5);
+        expect(6);
 
-        dessert.customHandler(function (message) {
+        dessert.customHandler(function (expr, message) {
             ok(true, "Custom handler called");
             equal(message, "foo", "Message passed to custom handler");
         });
@@ -23,14 +23,15 @@
             dessert.assert(false, "foo");
         }, "Assertion with custom handler");
 
-        dessert.customHandler(function (message) {
+        dessert.customHandler(function () {
             ok(true, "Custom handler prevents exception");
             return false;
         });
         dessert.assert(false, "foo");
 
-        dessert.customHandler(function (message) {
-            equal(message, "foo bar", "Multi-part message");
+        dessert.customHandler(function (expr, arg1, arg2) {
+            equal(arg1, "foo", "Multi-part message");
+            equal(arg2, "bar", "Multi-part message");
             return false;
         });
         dessert.assert(false, "foo", "bar");
@@ -78,13 +79,15 @@
     test("Assertion messages", function () {
         expect(2);
 
-        dessert.addType('testTypeWithMessage', function (expr) {
+        function testValidator(expr) {
             return expr === 'test';
-        });
+        }
+
+        dessert.addType('testTypeWithMessage', testValidator);
 
         var backup = dessert.assert;
         dessert.assert = function (expr, message) {
-            equal(expr, false, "Assertion failed");
+            strictEqual(expr, testValidator, "Validator passed");
             deepEqual(
                 Array.prototype.slice.call(arguments, 1),
                 [
