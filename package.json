@@ -1,6 +1,6 @@
 {
     "name"       : "dessert",
-    "version"    : "0.2.5",
+    "version"    : "0.2.6",
     "description": "Extensible assertions",
     "keywords"   : ["assert", "assertions", "error", "exception"],
     "author"     : "Dan Stocker <dan@kwaia.com>",
