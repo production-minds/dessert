@@ -6,89 +6,89 @@
     "use strict";
 
     dessert.addTypes(/** @lends dessert */{
-        hasValue: function hasValue(expr) {
+        hasValue: function (expr) {
             return typeof expr !== 'undefined';
         },
 
-        isString: function isString(expr) {
+        isString: function (expr) {
             return typeof expr === 'string' ||
                    expr instanceof String;
         },
 
-        isStringOptional: function isStringOptional(expr) {
+        isStringOptional: function (expr) {
             return typeof expr === 'undefined' ||
                    typeof expr === 'string' ||
                    expr instanceof String;
         },
 
-        isBoolean: function isBoolean(expr) {
+        isBoolean: function (expr) {
             return typeof expr === 'boolean' ||
                    expr instanceof Boolean;
         },
 
-        isBooleanOptional: function isBooleanOptional(expr) {
+        isBooleanOptional: function (expr) {
             return typeof expr === 'undefined' ||
                    typeof expr === 'boolean' ||
                    expr instanceof Boolean;
         },
 
-        isNumber: function isNumber(expr) {
+        isNumber: function (expr) {
             return typeof expr === 'number' ||
                    expr instanceof  Number;
         },
 
-        isNumberOptional: function isNumberOptional(expr) {
+        isNumberOptional: function (expr) {
             return typeof expr === 'undefined' ||
                    typeof expr === 'number' ||
                    expr instanceof  Number;
         },
 
-        isFunction: function isFunction(expr) {
+        isFunction: function (expr) {
             return typeof expr === 'function';
         },
 
-        isFunctionOptional: function isFunctionOptional(expr) {
+        isFunctionOptional: function (expr) {
             return typeof expr === 'undefined' ||
                    typeof expr === 'function';
         },
 
-        isObject: function isObject(expr) {
+        isObject: function (expr) {
             return expr instanceof Object;
         },
 
-        isObjectOptional: function isObjectOptional(expr) {
+        isObjectOptional: function (expr) {
             return typeof expr === 'undefined' ||
                    expr instanceof Object;
         },
 
-        isPlainObject: function isPlainObject(expr) {
+        isPlainObject: function (expr) {
             return expr instanceof Object &&
                    Object.getPrototypeOf(expr) === Object.prototype;
         },
 
-        isArray: function isArray(expr) {
+        isArray: function (expr) {
             return expr instanceof Array;
         },
 
-        isArrayOptional: function isArrayOptional(expr) {
+        isArrayOptional: function (expr) {
             return typeof expr === 'undefined' ||
                    expr instanceof Array;
         },
 
-        isRegExp: function isRegExp(expr) {
+        isRegExp: function (expr) {
             return expr instanceof RegExp;
         },
 
-        isRegExpOptional: function isRegExpOptional(expr) {
+        isRegExpOptional: function (expr) {
             return typeof expr === 'undefined' ||
                    expr instanceof RegExp;
         },
 
-        isDate: function isDate(expr) {
+        isDate: function (expr) {
             return expr instanceof Date;
         },
 
-        isDateOptional: function isDateOptional(expr) {
+        isDateOptional: function (expr) {
             return typeof expr === 'undefined' ||
                    expr instanceof Date;
         },
@@ -96,12 +96,12 @@
         /**
          * Agnostic as to whether jQuery is present.
          */
-        isJQuery: function isJQuery(expr) {
+        isJQuery: function (expr) {
             return jQuery instanceof Object &&
                    expr instanceof jQuery;
         },
 
-        isJQueryOptional: function isJQueryOptional(expr) {
+        isJQueryOptional: function (expr) {
             return typeof expr === 'undefined' ||
                    jQuery instanceof Object &&
                    expr instanceof jQuery;
