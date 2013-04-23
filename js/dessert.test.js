@@ -1,4 +1,4 @@
-/*global dessert, module, test, expect, raises, equal, deepEqual, ok */
+/*global dessert, module, test, expect, raises, equal, strictEqual, deepEqual, ok */
 (function () {
     "use strict";
 
@@ -74,6 +74,20 @@
         raises(function () {
             dessert.test('foo');
         }, "Custom assertion failed");
+    });
+
+    test("Type addition with override", function () {
+        raises(function () {
+            dessert.addType('test', function () {});
+        }, "Attempting to overwrite custom validator");
+
+        dessert.addType(
+            'test',
+            function (expr) {return expr === 'overwritten';},
+            true
+        );
+
+        equal(dessert.test('overwritten'), dessert, "Custom assertion passed");
     });
 
     test("Assertion messages", function () {

@@ -69,18 +69,20 @@ var dessert;
          * @param {function} validator Function validating a given type.
          * In it, `this` will refer to the `validators` namespace containing
          * all available validators. Expected to return boolean.
+         * @param {boolean} [allowOverride] Whether to allow overriding existing validators.
          * @return {dessert}
          */
-        addType: function (methodName, validator) {
-            this.assert(
-                typeof methodName === 'string' &&
-                typeof validator === 'function'
-            );
+        addType: function (methodName, validator, allowOverride) {
+            this
+                .assert(typeof methodName === 'string', "Invalid method name")
+                .assert(typeof validator === 'function', "Invalid validator function");
 
             var that = this,
                 validators = this.validators;
 
-            if (!this.hasOwnProperty(methodName)) {
+            if (!this.hasOwnProperty(methodName) || // doesn't match built-in nor custom methods
+                (allowOverride && validators.hasOwnProperty(methodName)) // or matches validator only
+                ) {
                 // adding validator to validator pool
                 validators[methodName] = validator;
 
@@ -118,10 +120,11 @@ var dessert;
          * IMPORTANT: `.addTypes()` is preferable to `.addType()`, for IDE integration reasons,
          * even when adding a single type.
          * @param {object} methods
+         * @param {boolean} [allowOverride] Whether to allow overriding existing validators.
          * @return {dessert}
          */
-        addTypes: function (methods) {
-            this.assert(methods instanceof Object);
+        addTypes: function (methods, allowOverride) {
+            this.assert(methods instanceof Object, "Invalid methods object");
 
             var methodName,
                 validator;
@@ -129,7 +132,7 @@ var dessert;
             for (methodName in methods) {
                 if (methods.hasOwnProperty(methodName)) {
                     validator = methods[methodName];
-                    this.addType(methodName, validator);
+                    this.addType(methodName, validator, allowOverride);
                 }
             }
 
