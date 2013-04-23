@@ -89,11 +89,17 @@ var dessert;
                  * @returns {dessert}
                  */
                 this[methodName] = function () {
-                    var args = Array.prototype.slice.call(arguments);
-                    args.unshift(validator);
+                    var success = validator.apply(validators, arguments),
+                        args;
 
-                    // calling assert with prepared arguments
-                    that.assert.apply(that, args);
+                    if (!success) {
+                        // validation has failed
+                        args = Array.prototype.slice.call(arguments);
+                        args.unshift(validator);
+
+                        // calling assert with prepared arguments
+                        that.assert.apply(that, args);
+                    }
 
                     // making sure method returns namespace
                     return that;
