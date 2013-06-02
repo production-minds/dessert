@@ -74,9 +74,15 @@
         raises(function () {
             dessert.test('foo');
         }, "Custom assertion failed");
+
+        // removing custom handler
+        delete dessert.validators.test;
+        delete dessert.test;
     });
 
     test("Type addition with override", function () {
+        dessert.addType('test', function () {});
+
         raises(function () {
             dessert.addType('test', function () {});
         }, "Attempting to overwrite custom validator");
@@ -88,6 +94,10 @@
         );
 
         equal(dessert.test('overwritten'), dessert, "Custom assertion passed");
+
+        // removing custom handler
+        delete dessert.validators.test;
+        delete dessert.test;
     });
 
     test("Assertion messages", function () {
@@ -116,22 +126,30 @@
         dessert.testTypeWithMessage('foo', "Assertion failed", 1);
 
         dessert.assert = backup;
+
+        // removing custom handler
+        delete dessert.validators.testTypeWithMessage;
+        delete dessert.testTypeWithMessage;
     });
 
     test("Multiple type addition", function () {
-        ok(!dessert.hasOwnProperty('test1'), "New type is not pre-existing (sanity check)");
+        ok(!dessert.hasOwnProperty('test'), "New type is not pre-existing (sanity check)");
 
         dessert.addTypes({
-            test1: function (expr) {
+            test: function (expr) {
                 // returning a boolean expression to be passed to `.assert`
                 return expr === 'test';
             }
         });
 
-        equal(dessert.test1('test'), dessert, "Custom assertion passed");
+        equal(dessert.test('test'), dessert, "Custom assertion passed");
 
         raises(function () {
-            dessert.test1('foo');
+            dessert.test('foo');
         }, "Custom assertion failed");
+
+        // removing custom handler
+        delete dessert.validators.test;
+        delete dessert.test;
     });
 }());
